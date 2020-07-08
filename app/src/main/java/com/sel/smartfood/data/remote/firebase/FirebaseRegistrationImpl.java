@@ -6,7 +6,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import io.reactivex.rxjava3.core.Completable;
 
-public class FirebaseRegistrationImpl implements FirebaseRegistration{
+public class    FirebaseRegistrationImpl implements FirebaseRegistration{
     private FirebaseAuth firebaseAuth;
     private DatabaseReference ref;
     public FirebaseRegistrationImpl(){

@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -19,6 +20,8 @@ public class CustomerInfoFragment extends Fragment {
     EditText    ed_customer_phone;
     EditText    ed_customer_email;
     Spinner spinner_paymemt;
+    Button  btn_confirm;
+    Button  btn_comeback;
 
     public CustomerInfoFragment() {
         // Required empty public constructor
@@ -47,6 +50,8 @@ public class CustomerInfoFragment extends Fragment {
         ed_customer_phone = view.findViewById(R.id.ed_customer_phone);
         ed_customer_email = view.findViewById(R.id.ed_customer_email);
         spinner_paymemt = view.findViewById(R.id.spinner_payment);
+        btn_confirm = view.findViewById(R.id.btn_confirm);
+        btn_comeback = view.findViewById(R.id.btn_comeback);
 
     }
 
