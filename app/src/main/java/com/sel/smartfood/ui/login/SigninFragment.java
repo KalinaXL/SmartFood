@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sel.smartfood.data.model.Emitter;
+import com.sel.smartfood.ui.main.AdminActivity;
 import com.sel.smartfood.ui.main.MainActivity;
 import com.sel.smartfood.R;
 import com.sel.smartfood.data.model.SigninFormState;
@@ -112,7 +113,13 @@ public class SigninFragment extends Fragment {
             }
             Result result = loginResult.getData();
             if (result instanceof Result.Success){
-                Intent intent = new Intent(getActivity(), MainActivity.class);
+                Intent intent;
+                if (usernameEt.getText().toString().contains("admin")){
+                    intent = new Intent(getActivity(), AdminActivity.class);
+                }
+                else{
+                    intent = new Intent(getActivity(), MainActivity.class);
+                }
                 startActivity(intent);
                 requireActivity().finish();
             }

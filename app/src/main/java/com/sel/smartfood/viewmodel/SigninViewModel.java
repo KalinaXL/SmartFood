@@ -59,6 +59,9 @@ public class SigninViewModel extends AndroidViewModel {
                     signinResult.postValue(new Emitter<>(new Result.Success<>(true)));
                     preferenceManager.saveLogInState();
                     preferenceManager.setEmail(username);
+                    if (username.contains("admin")){
+                        preferenceManager.setAdminState();
+                    }
                 }, this::handleLoginWithEmailError);
         if (compositeDisposable == null){
             compositeDisposable = new CompositeDisposable();
@@ -96,6 +99,10 @@ public class SigninViewModel extends AndroidViewModel {
     public void checkLoggedInState(){
         // kiem tra co dang nhap chua
         isLoggedIn.setValue(preferenceManager.getLogInState());
+    }
+
+    public boolean isAdmin(){
+        return preferenceManager.isAdmin();
     }
 
     @Override

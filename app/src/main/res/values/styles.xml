@@ -8,24 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name = "AppTheme.NoActionbar">
-        <item name = "windowActionBar"> false </item>
-        <item name = "windowNoTitle"> true </item>
+    <style name="AppTheme.NoActionbar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
     <style name="AppTheme.SlashScreen" parent="AppTheme.NoActionbar">
-        <item name ="android:windowBackground">@drawable/bg_slashscreen</item>
+        <item name="android:windowBackground">@drawable/bg_slashscreen</item>
     </style>
 
-    <style name = "FullscreenDialogTheme" parent = "Theme.AppCompat.DayNight.DialogWhenLarge">
-        <item name = "windowActionBar"> false </item>
-        <item name = "windowNoTitle"> true </item>
+    <style name="FullscreenDialogTheme" parent="Theme.AppCompat.DayNight.DialogWhenLarge">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
-    <style name = "BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
-        <item name = "bottomSheetStyle">@style/BottomSheetStyle</item>
+
+    <style name="BottomSheetDialogTheme" parent="Theme.Design.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheetStyle</item>
     </style>
-    <style name = "BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
-        <item name = "android:background">@android:color/transparent</item>
+
+    <style name="BottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
     </style>
 
     <style name="parent">
@@ -46,7 +48,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="loginCard" parent="parent"/>
+    <style name="loginCard" parent="parent" />
 
     <style name="linearParent" parent="parent">
         <item name="android:orientation">vertical</item>
@@ -146,6 +148,11 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_alignParentTop">true</item>
         <item name="android:minWidth">250dp</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 
 </resources>
