@@ -142,7 +142,6 @@ public class ShopCartFragment extends Fragment {
     }
     private void navigateToPaymentServiceChoice(View v){
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_transaction_to_choosePaymentServiceFragment);
-//        bottomSheetDialog.dismiss();
     }
 
     private void CatchOnItemListView() {
