@@ -31,7 +31,7 @@
     * [ ] Thông tin tài khoản
         * [x] Hiển thị thông tin người dùng
         * [ ] Lịch sử đặt hàng
-        * [ ] Lịch sử giao dịch
+        * [x] Lịch sử giao dịch
         * [x] Đăng xuất
     * [ ] Database:
         * [x] Firebase
