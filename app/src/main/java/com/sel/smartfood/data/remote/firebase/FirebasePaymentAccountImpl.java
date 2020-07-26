@@ -31,6 +31,11 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
         historiesRef = firebaseDatabase.getReference().child("TransHistories");
         this.balanceCallbackListener = balanceCallbackListener;
     }
+    public FirebasePaymentAccountImpl(){
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        ref = firebaseDatabase.getReference().child("PaymentAccounts");
+        historiesRef = firebaseDatabase.getReference().child("TransHistories");
+    }
 
     @Nullable
     @Override
@@ -102,6 +107,32 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
                     emitter.onError(error.toException());
                 }
             });
+        });
+    }
+
+    @Override
+    public Single<List<TransHistory>> getAllTransHistories() {
+        return Single.create(emitter -> {
+           historiesRef.addValueEventListener(new ValueEventListener() {
+               @Override
+               public void onDataChange(@NonNull DataSnapshot snapshot) {
+                   List<TransHistory> transHistories = new ArrayList<>();
+                   Map<String, Object> td = (HashMap<String, Object>)snapshot.getValue();
+                   for (Object obj : td.values()){
+                       Map<String, Object> m = (Map<String, Object>)obj;
+                       for (Object b : m.values()){
+                           Map<String, Object> map = (Map<String, Object>)b;
+                           transHistories.add(new TransHistory((String)map.get("email"), (Long)map.get("amountOfMoney"), (String) map.get("service"), (String)map.get("date"), (Boolean)map.get("withdraw")));
+                       }
+                   }
+                   emitter.onSuccess(transHistories);
+               }
+
+               @Override
+               public void onCancelled(@NonNull DatabaseError error) {
+                   emitter.onError(error.toException());
+               }
+           });
         });
     }
 }

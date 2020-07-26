@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sel.smartfood.ui.login.LoginActivity;
-import com.sel.smartfood.ui.main.AdminActivity;
+import com.sel.smartfood.ui.admin.AdminActivity;
 import com.sel.smartfood.ui.main.MainActivity;
 import com.sel.smartfood.utils.NetworkStatus;
 import com.sel.smartfood.viewmodel.SigninViewModel;

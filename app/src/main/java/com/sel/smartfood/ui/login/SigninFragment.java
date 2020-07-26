@@ -19,7 +19,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sel.smartfood.data.model.Emitter;
-import com.sel.smartfood.ui.main.AdminActivity;
+import com.sel.smartfood.ui.admin.AdminActivity;
 import com.sel.smartfood.ui.main.MainActivity;
 import com.sel.smartfood.R;
 import com.sel.smartfood.data.model.SigninFormState;
