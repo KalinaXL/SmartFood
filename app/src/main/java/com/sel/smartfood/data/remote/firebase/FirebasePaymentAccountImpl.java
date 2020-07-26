@@ -8,6 +8,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.sel.smartfood.data.model.OrderHistory;
 import com.sel.smartfood.data.model.PaymentAccount;
 import com.sel.smartfood.data.model.TransHistory;
 import com.sel.smartfood.ui.transaction.IBalanceCallbackListener;
@@ -23,12 +24,14 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference ref;
     private DatabaseReference historiesRef;
+    private DatabaseReference historiesOrder;
     private IBalanceCallbackListener balanceCallbackListener;
 
     public FirebasePaymentAccountImpl(IBalanceCallbackListener balanceCallbackListener){
         firebaseDatabase = FirebaseDatabase.getInstance();
         ref = firebaseDatabase.getReference().child("PaymentAccounts");
         historiesRef = firebaseDatabase.getReference().child("TransHistories");
+        historiesOrder = firebaseDatabase.getReference().child("OrderHistories");
         this.balanceCallbackListener = balanceCallbackListener;
     }
 
@@ -79,6 +82,10 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
         String key = email.split("@")[0];
         historiesRef.child(key).push().setValue(new TransHistory(email, amountOfMoney, service, date, isWithdraw));
     }
+    public void saveOrderHistory(String email, String productName, int productTotalPrice, int productNumber, String date ,String productImage){
+        String key = email.split("@")[0];
+        historiesOrder.child(key).push().setValue(new OrderHistory(productName, productTotalPrice,productNumber, date,productImage));
+    }
 
     @Override
     public Single<List<TransHistory>> getTransHistories(String email) {
@@ -100,6 +107,33 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
                     emitter.onError(error.toException());
+                }
+            });
+        });
+    }
+
+    public Single<List<OrderHistory>> getOrderHistories(String email) {
+        String key = email.split("@")[0];
+
+        return Single.create(emitter -> {
+            historiesOrder.child(key).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    List<OrderHistory> orderHistories = new ArrayList<>();
+                    Map<String, Object> td = (HashMap<String, Object>)snapshot.getValue();
+                    for(Object obj : td.values()){
+                        Map<String, Object>map = (Map<String, Object>)obj;
+
+                        orderHistories.add(new OrderHistory((String)map.get("productName"), (int)map.get("productTotalPrice"),
+                                (int)map.get("productNumber"),(String)map.get("date"), (String)map.get("productImage")));
+                    }
+                    emitter.onSuccess(orderHistories);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+                    emitter.onError(error.toException());
+
                 }
             });
         });

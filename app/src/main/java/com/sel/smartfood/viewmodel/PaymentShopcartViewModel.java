@@ -32,6 +32,11 @@ public class PaymentShopcartViewModel extends AndroidViewModel implements IBalan
     private boolean isWithdraw;
     private String service;
 
+    private String productName;
+    private int productTotalPrice;
+    private int productNumber;
+    private String productImage;
+
     public PaymentShopcartViewModel(@NonNull Application application) {
         super(application);
         firebaseService = new FirebaseServiceBuilder().addPaymentAccount(new FirebasePaymentAccountImpl(this)).build();
@@ -54,6 +59,11 @@ public class PaymentShopcartViewModel extends AndroidViewModel implements IBalan
         String date = Calendar.getInstance().getTime().toString();
         firebaseService.saveTransHistory(preferenceManager.getEmail(), amountOfMoney, service, date, isWithdraw);
     }
+
+    public void saveOrderHistory(String productName, int productTotalPrice, int productNumber, String productImage){
+        String date = Calendar.getInstance().getTime().toString();
+        firebaseService.saveOrderHistory(preferenceManager.getEmail(), productName, productTotalPrice, productNumber, date, productImage);
+    }
     @Override
     protected void onCleared() {
         super.onCleared();
@@ -70,6 +80,21 @@ public class PaymentShopcartViewModel extends AndroidViewModel implements IBalan
         isWithdraw = withdraw;
     }
 
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+    public void setProductTotalPrice(int productTotalPrice) {
+        this.productTotalPrice = productTotalPrice;
+    }
+
+    public void setProductNumber(int productNumber) {
+        this.productNumber = productNumber;
+    }
+
+    public void setProductImage(String productImage) {
+        this.productImage = productImage;
+    }
 
     public LiveData<Boolean> getIsPaymentButtonEnabled() {
         return isPaymentButtonEnabled;

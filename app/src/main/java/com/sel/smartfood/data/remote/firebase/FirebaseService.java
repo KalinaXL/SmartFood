@@ -1,16 +1,14 @@
 package com.sel.smartfood.data.remote.firebase;
 
 import com.google.firebase.auth.FirebaseUser;
-import com.sel.smartfood.data.model.Category;
+import com.sel.smartfood.data.model.OrderHistory;
 import com.sel.smartfood.data.model.PaymentAccount;
-import com.sel.smartfood.data.model.Product;
 import com.sel.smartfood.data.model.TransHistory;
 import com.sel.smartfood.data.model.User;
 
 import java.util.List;
 
 import io.reactivex.rxjava3.core.Completable;
-import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Single;
 
 public class FirebaseService {
@@ -58,8 +56,16 @@ public class FirebaseService {
        firebasePayment.saveTransHistory(email, amountOfMoney, service, date, isWithdraw);
    }
 
+   public void saveOrderHistory(String email, String productName, int productTotalPrice, int productNumber,String date, String productImage){
+       firebasePayment.saveOrderHistory(email,productName,productTotalPrice,productNumber,date,productImage);
+   }
+
    public Single<List<TransHistory>> getTransHistories(String email){
        return firebasePayment.getTransHistories(email);
+   }
+
+   public Single<List<OrderHistory>> getOrderHistories(String email){
+       return firebasePayment.getOrderHistories(email);
    }
 
    public void getCategories(){

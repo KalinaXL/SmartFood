@@ -22,6 +22,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.sel.smartfood.R;
+import com.sel.smartfood.data.model.ShopCartModel;
 import com.sel.smartfood.ui.shop.ShopFragment;
 import com.sel.smartfood.viewmodel.PaymentShopcartViewModel;
 
@@ -113,6 +114,14 @@ public class ShopCartFragment extends Fragment {
                     Boolean flag = isSuccessful.getData();
                     if (flag != null && flag){
                         viewModel.saveTransHistories(amountOfPrice);
+                        for(int i = 0; i < ShopFragment.orderProductList.size(); ++i){
+                            ShopCartModel orderProduct = ShopFragment.orderProductList.get(i);
+
+                        viewModel.saveOrderHistory(orderProduct.productName,
+                                orderProduct.productPrice * orderProduct.productNumbers,
+                                orderProduct.productNumbers,
+                                orderProduct.getProductImage());
+                        }
                         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                                 .setCancelable(false)
                                 .setTitle("Thông báo")
