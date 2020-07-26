@@ -33,7 +33,12 @@
         * [ ] Lịch sử đặt hàng
         * [x] Lịch sử giao dịch
         * [x] Đăng xuất
-        * [ ] Cài đặt cấu hình cho app
+    * [] Administrators
+        * [x] Hiển thị món ăn
+        * [ ] Chỉnh sửa món ăn
+        * [ ] Thống kê
+        * [x] Hiển thị thông tin administrator
+        * [x] Đăng xuất
     * [ ] Database:
         * [x] Firebase
         * [ ] Dùng Database riêng

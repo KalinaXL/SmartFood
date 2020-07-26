@@ -9,19 +9,19 @@ import androidx.lifecycle.MutableLiveData;
 import com.sel.smartfood.R;
 import com.sel.smartfood.data.local.PreferenceManager;
 import com.sel.smartfood.data.model.Emitter;
+import com.sel.smartfood.data.model.OrderHistory;
 import com.sel.smartfood.data.model.PaymentAccount;
+import com.sel.smartfood.data.model.PaymentService;
 import com.sel.smartfood.data.model.TransHistory;
 import com.sel.smartfood.data.remote.firebase.FirebasePaymentAccountImpl;
 import com.sel.smartfood.data.remote.firebase.FirebaseService;
 import com.sel.smartfood.data.remote.firebase.FirebaseServiceBuilder;
 import com.sel.smartfood.ui.transaction.IBalanceCallbackListener;
-import com.sel.smartfood.data.model.PaymentService;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import io.reactivex.rxjava3.core.Scheduler;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -34,6 +34,7 @@ public class TransactionViewModel extends AndroidViewModel implements IBalanceCa
     private MutableLiveData<PaymentAccount> paymentAccount = new MutableLiveData<>();
     private MutableLiveData<Emitter<Boolean>> isUpdatedSuccessful = new MutableLiveData<>();
     private MutableLiveData<List<TransHistory>> transHistoryList = new MutableLiveData<>();
+    private MutableLiveData<List<OrderHistory>> orderHistoryList = new MutableLiveData<>();
 
     private FirebaseService firebaseService;
     private PreferenceManager preferenceManager;
@@ -81,12 +82,24 @@ public class TransactionViewModel extends AndroidViewModel implements IBalanceCa
         String date = Calendar.getInstance().getTime().toString();
         firebaseService.saveTransHistory(preferenceManager.getEmail(), amountOfMoney, service, date, isWithdraw);
     }
+    public void saveOrderHistory(String productName, int productTotalPrice, int productNumber, String productImage){
+        String date = Calendar.getInstance().getTime().toString();
+        firebaseService.saveOrderHistory(preferenceManager.getEmail(), productName, productTotalPrice, productNumber, date, productImage);
+    }
 
     public void getTransHistories(){
         String email = preferenceManager.getEmail();
         Disposable d = firebaseService.getTransHistories(email)
                 .subscribeOn(Schedulers.io())
                 .subscribe(list -> transHistoryList.postValue(list), e -> transHistoryList.postValue(null));
+        compositeDisposable.add(d);
+    }
+
+    public void getOrderHistories(){
+        String email = preferenceManager.getEmail();
+        Disposable d = firebaseService.getOrderHistories(email)
+                .subscribeOn(Schedulers.io())
+                .subscribe(list -> orderHistoryList.postValue(list), e -> orderHistoryList.postValue(null));
         compositeDisposable.add(d);
     }
 
@@ -137,6 +150,10 @@ public class TransactionViewModel extends AndroidViewModel implements IBalanceCa
 
     public LiveData<List<TransHistory>> getTransHistoryList() {
         return transHistoryList;
+    }
+
+    public LiveData<List<OrderHistory>> getOrderHistoryList() {
+        return orderHistoryList;
     }
 
     public void amountOfMoneyChange(String number){

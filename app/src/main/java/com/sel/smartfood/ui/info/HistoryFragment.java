@@ -40,5 +40,14 @@ public class HistoryFragment extends Fragment{
             .addToBackStack(null)
             .commit();
         });
+
+        orderHistoryRL.setOnClickListener(v->{
+            viewModel.getOrderHistories();
+            getParentFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fcv_container_info, new DetailOrderHistoryFragment())
+                    .addToBackStack(null)
+                    .commit();
+        });
     }
 }

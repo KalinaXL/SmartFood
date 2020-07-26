@@ -61,6 +61,7 @@ public class AdminActivity extends AppCompatActivity {
 
         navigationView.getMenu().getItem(2).setOnMenuItemClickListener(v -> {
             Intent intent = new Intent(AdminActivity.this, LoginActivity.class);
+            adminViewModel.logout();
             startActivity(intent);
             finish();
             return true;

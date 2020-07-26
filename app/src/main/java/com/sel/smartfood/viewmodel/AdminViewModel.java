@@ -47,6 +47,10 @@ public class AdminViewModel extends AndroidViewModel {
                     .subscribe(user -> tranHistories.postValue(user), e -> tranHistories.postValue(null));
         compositeDisposable.add(d);
     }
+    public void logout(){
+        preferenceManager.deleteLogInState();
+        preferenceManager.clearEmail();
+    }
 
     public LiveData<List<TransHistory>> getTranHistories() {
         return tranHistories;
