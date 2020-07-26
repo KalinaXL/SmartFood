@@ -117,10 +117,10 @@ public class ShopCartFragment extends Fragment {
                         for(int i = 0; i < ShopFragment.orderProductList.size(); ++i){
                             ShopCartModel orderProduct = ShopFragment.orderProductList.get(i);
 
-                        viewModel.saveOrderHistory(orderProduct.productName,
-                                orderProduct.productPrice * orderProduct.productNumbers,
-                                orderProduct.productNumbers,
-                                orderProduct.getProductImage());
+                            viewModel.saveOrderHistory(orderProduct.productName,
+                                    orderProduct.productPrice * orderProduct.productNumbers,
+                                    orderProduct.productNumbers,
+                                    orderProduct.getProductImage());
                         }
                         AlertDialog dialog = new AlertDialog.Builder(requireContext())
                                 .setCancelable(false)

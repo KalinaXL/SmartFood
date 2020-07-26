@@ -114,7 +114,6 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
 
     public Single<List<OrderHistory>> getOrderHistories(String email) {
         String key = email.split("@")[0];
-
         return Single.create(emitter -> {
             historiesOrder.child(key).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -124,8 +123,8 @@ public class FirebasePaymentAccountImpl implements FirebasePaymentAccount {
                     for(Object obj : td.values()){
                         Map<String, Object>map = (Map<String, Object>)obj;
 
-                        orderHistories.add(new OrderHistory((String)map.get("productName"), (int)map.get("productTotalPrice"),
-                                (int)map.get("productNumber"),(String)map.get("date"), (String)map.get("productImage")));
+                        orderHistories.add(new OrderHistory((String)map.get("productName"), (long)map.get("productTotalPrice"),
+                                (long)map.get("productNumber"),(String)map.get("date"), (String)map.get("productImage")));
                     }
                     emitter.onSuccess(orderHistories);
                 }

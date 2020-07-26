@@ -35,13 +35,9 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
     public void onBindViewHolder(@NonNull OrderHistoryHolder holder, int position) {
         OrderHistory orderHistory = orderHistoryList.get(position);
         holder.orderHisItemNameTv.setText(orderHistory.getProductName());
-
         DecimalFormat decimalFormat = new DecimalFormat("###,###,###");
         holder.orderHisItemTotalPriceTv.setText(decimalFormat.format(orderHistory.getProductTotalPrice()) + "Đ");
-
         holder.orderHisItemNumberTv.setText(String.valueOf(orderHistory.getProductNumber()));
-
-
         Picasso.get().load(orderHistory.getProductImage())
                 .placeholder(R.drawable.no_image)
                 .error(R.drawable.error)
@@ -50,7 +46,7 @@ public class OrderHistoryAdapter extends RecyclerView.Adapter<OrderHistoryAdapte
 
     @Override
     public int getItemCount() {
-        return orderHistoryList.size();
+        return orderHistoryList == null ? 0 : orderHistoryList.size();
     }
     public void setDataChanged(List<OrderHistory> orderHistories){
         this.orderHistoryList = orderHistories;

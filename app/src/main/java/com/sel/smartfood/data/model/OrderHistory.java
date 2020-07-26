@@ -4,14 +4,14 @@ package com.sel.smartfood.data.model;
 
 public class OrderHistory{
     private String  productName;
-    private int productTotalPrice;
-    private int  productNumber;
+    private long productTotalPrice;
+    private long  productNumber;
     private String date;
     private String  productImage;
 
     public OrderHistory(){}
 
-    public OrderHistory(String productName, int productTotalPrice, int productNumber,String date, String productImage) {
+    public OrderHistory(String productName, long productTotalPrice, long productNumber,String date, String productImage) {
         this.productName = productName;
         this.productTotalPrice = productTotalPrice;
         this.productNumber = productNumber;
@@ -35,15 +35,15 @@ public class OrderHistory{
         this.productName = productName;
     }
 
-    public int getProductTotalPrice() {
+    public long getProductTotalPrice() {
         return productTotalPrice;
     }
 
-    public void setProductTotalPrice(int productTotalPrice) {
+    public void setProductTotalPrice(long productTotalPrice) {
         this.productTotalPrice = productTotalPrice;
     }
 
-    public int getProductNumber() {
+    public long getProductNumber() {
         return productNumber;
     }
 
