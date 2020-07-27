@@ -63,6 +63,9 @@ public class FirebaseService {
    public Single<List<TransHistory>> getTransHistories(String email){
        return firebasePayment.getTransHistories(email);
    }
+   public Single<List<TransHistory>> getAllTransHistories(){
+       return firebasePayment.getAllTransHistories();
+   }
 
    public Single<List<OrderHistory>> getOrderHistories(String email){
        return firebasePayment.getOrderHistories(email);

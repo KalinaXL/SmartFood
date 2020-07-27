@@ -20,5 +20,6 @@ public interface FirebasePaymentAccount {
     void saveOrderHistory(String email, String productName, int productTotalPrice, int productNumber,String date, String productImage);
 
     Single<List<TransHistory>> getTransHistories(String email);
+    Single<List<TransHistory>> getAllTransHistories();
     Single<List<OrderHistory>> getOrderHistories(String email);
 }

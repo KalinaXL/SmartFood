@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.sel.smartfood.ui.login.LoginActivity;
+import com.sel.smartfood.ui.admin.AdminActivity;
 import com.sel.smartfood.ui.main.MainActivity;
 import com.sel.smartfood.utils.NetworkStatus;
 import com.sel.smartfood.viewmodel.SigninViewModel;
@@ -41,7 +42,12 @@ public class SlashScreenAcvitity extends AppCompatActivity {
                 intent = new Intent(this, LoginActivity.class);
             }
             else{
-                intent = new Intent(this, MainActivity.class);
+                if (signinViewModel.isAdmin()){
+                    intent = new Intent(this, AdminActivity.class);
+                }
+                else{
+                    intent = new Intent(this, MainActivity.class);
+                }
             }
             handler.post(() -> {
                 startActivity(intent);
