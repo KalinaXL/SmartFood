@@ -8,9 +8,47 @@
     <fragment
         android:id="@+id/admin_nav_shop"
         android:name="com.sel.smartfood.ui.shop.ShopFragment"
-        android:label="Cửa hàng" />
+        android:label="Cửa hàng" >
+        <action
+            android:id="@+id/action_admin_nav_shop_to_productDetailFragment2"
+            app:destination="@id/productDetailFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/admin_nav_statistics"
         android:name="com.sel.smartfood.ui.admin.FragmentStatistics"
         android:label="Thống kê"/>
+    <fragment
+        android:id="@+id/productDetailFragment2"
+        android:name="com.sel.smartfood.ui.shop.ProductDetailFragment"
+        android:label="fragment_admin_shop"
+        tools:layout="@layout/fragment_admin_shop" >
+        <argument
+            android:name="product_name"
+            app:argType="string"
+            android:defaultValue="Tên sản phẩm " />
+        <argument
+            android:name="product_price"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="product_description"
+            app:argType="string"
+            android:defaultValue="Mô tả sản phẩm" />
+        <argument
+            android:name="product_pre_time"
+            app:argType="float"
+            android:defaultValue="0.0" />
+        <argument
+            android:name="product_ratingScore"
+            app:argType="integer"
+            android:defaultValue="0" />
+        <argument
+            android:name="product_image"
+            app:argType="string"
+            android:defaultValue="hình ảnh" />
+        <argument
+            android:name="product_id"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>
