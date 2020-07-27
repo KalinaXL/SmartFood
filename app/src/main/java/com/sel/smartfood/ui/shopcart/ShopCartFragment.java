@@ -128,9 +128,14 @@ public class ShopCartFragment extends Fragment {
                                 .setMessage("Đặt hàng thành công")
                                 .setPositiveButton("OK", (dialog1, which) -> {
                                     ShopFragment.orderProductList.clear();
+                                    shopCartAdapter.notifyDataSetChanged();
+                                    EventUtil();
+                                    tvNotification.setVisibility(View.VISIBLE);
                                     shopCartAdapter = new ShopCartAdapter(requireActivity(), ShopFragment.orderProductList);
+
                                 }).create();
                         dialog.show();
+                        bottomSheetDialog.dismiss();
                     }
                     else if (first){
                         AlertDialog dialog = new AlertDialog.Builder(requireContext())
