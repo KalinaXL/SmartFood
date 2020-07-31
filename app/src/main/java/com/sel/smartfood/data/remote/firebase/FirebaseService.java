@@ -3,6 +3,7 @@ package com.sel.smartfood.data.remote.firebase;
 import com.google.firebase.auth.FirebaseUser;
 import com.sel.smartfood.data.model.OrderHistory;
 import com.sel.smartfood.data.model.PaymentAccount;
+import com.sel.smartfood.data.model.Product;
 import com.sel.smartfood.data.model.TransHistory;
 import com.sel.smartfood.data.model.User;
 
@@ -69,6 +70,9 @@ public class FirebaseService {
 
    public Single<List<OrderHistory>> getOrderHistories(String email){
        return firebasePayment.getOrderHistories(email);
+   }
+   public Single<Boolean> updateProduct(Product product){
+       return firebaseProducts.updateProduct(product);
    }
 
    public void getCategories(){

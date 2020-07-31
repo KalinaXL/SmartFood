@@ -1,7 +1,10 @@
 package com.sel.smartfood.data.remote.firebase;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -15,12 +18,21 @@ import com.sel.smartfood.ui.shop.IProductCallbackListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Single;
+
 public class FirebaseProducts {
     private DatabaseReference productsRef;
     private DatabaseReference categoriesRef;
     private ICategoryCallbackListener categoryCallbackListener;
     private IProductCallbackListener productCallbackListener;
 
+
+    public FirebaseProducts(){
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+//        firebaseDatabase.setPersistenceEnabled(true);
+        productsRef = firebaseDatabase.getReference().child("Products");
+        categoriesRef = firebaseDatabase.getReference().child("Categories");
+    }
 
     public FirebaseProducts(ICategoryCallbackListener categoryCallbackListener, IProductCallbackListener productCallbackListener){
         this.categoryCallbackListener = categoryCallbackListener;
@@ -65,5 +77,39 @@ public class FirebaseProducts {
                 productCallbackListener.OnProductLoadSuccess(products);
             }
         });
+    }
+    public Single<Boolean> updateProduct(Product product){
+        return Single.create(emitter -> {
+                DatabaseReference reference = productsRef.child(String.valueOf(product.getId()));
+                reference.child("name").setValue(product.getName()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (emitter.isDisposed() || !task.isSuccessful()){
+                            emitter.onError(task.getException());
+                        }
+                    }
+                });
+                reference.child("price").setValue(product.getPrice()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (emitter.isDisposed() || !task.isSuccessful()){
+                            emitter.onError(task.getException());
+                        }
+                    }
+                });
+                reference.child("description").setValue(product.getDescription()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (emitter.isDisposed() || !task.isSuccessful()){
+                            emitter.onError(task.getException());
+                        }
+                        else{
+                            emitter.onSuccess(true);
+                        }
+                    }
+                });
+
+            }
+        );
     }
 }

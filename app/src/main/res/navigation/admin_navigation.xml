@@ -8,9 +8,17 @@
     <fragment
         android:id="@+id/admin_nav_shop"
         android:name="com.sel.smartfood.ui.shop.ShopFragment"
-        android:label="Cửa hàng" />
+        android:label="Cửa hàng" >
+        <action
+            android:id="@+id/action_admin_nav_shop_to_fragmentUpdateProduct"
+            app:destination="@id/fragmentUpdateProduct" />
+    </fragment>
     <fragment
         android:id="@+id/admin_nav_statistics"
         android:name="com.sel.smartfood.ui.admin.FragmentStatistics"
         android:label="Thống kê"/>
+    <fragment
+        android:id="@+id/fragmentUpdateProduct"
+        android:name="com.sel.smartfood.ui.admin.FragmentUpdateProduct"
+        android:label="Cập nhật món ăn" />
 </navigation>

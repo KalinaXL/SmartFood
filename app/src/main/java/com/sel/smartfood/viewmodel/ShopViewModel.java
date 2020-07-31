@@ -1,9 +1,13 @@
 package com.sel.smartfood.viewmodel;
 
+import android.app.Application;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.sel.smartfood.data.local.PreferenceManager;
 import com.sel.smartfood.data.model.Category;
 import com.sel.smartfood.data.model.Product;
 import com.sel.smartfood.data.model.ShopRepo;
@@ -15,17 +19,20 @@ import java.util.List;
 
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 
-public class ShopViewModel extends ViewModel implements ICategoryCallbackListener, IProductCallbackListener {
+public class ShopViewModel extends AndroidViewModel implements ICategoryCallbackListener, IProductCallbackListener {
     private CompositeDisposable compositeDisposable;
     private ShopRepo shopRepo;
     private List<Product> allProducts;
     private MutableLiveData<List<Product>> productList = new MutableLiveData<>();
     private MutableLiveData<List<Category>> categoryList = new MutableLiveData<>();
     private MutableLiveData<Boolean> hasProductsLoaded = new MutableLiveData<>();
+    private PreferenceManager preferenceManager;
 
-    public ShopViewModel(){
+    public ShopViewModel(Application application){
+        super(application);
         shopRepo = new ShopRepo(this, this);
         compositeDisposable = new CompositeDisposable();
+        preferenceManager = new PreferenceManager(application);
     }
 
     public void getCategories(){
@@ -68,12 +75,32 @@ public class ShopViewModel extends ViewModel implements ICategoryCallbackListene
         }
         productList.setValue(products);
     }
+
+    public boolean isAdminState(){
+        return preferenceManager.isAdmin();
+    }
+
     public void fetchMoreProducts(int position){
 //        Disposable d = shopRepo.fetchNewProducts(position)
 //                                .delay(4, TimeUnit.SECONDS)
 //                                .subscribeOn(Schedulers.single())
 //                                .subscribe(ls -> productList.postValue(ls), e -> productList.postValue(null));
 //        compositeDisposable.add(d);
+    }
+
+    public void changeProduct(Product product){
+        if (product == null)
+            return;
+        List<Product> products = productList.getValue();
+        if (products != null){
+            for (int i = 0; i < products.size(); i++){
+                if (products.get(i).getId() == product.getId()){
+                    products.get(i).setName(product.getName());
+                    products.get(i).setPrice(product.getPrice());
+                    products.get(i).setDescription(product.getDescription());
+                }
+            }
+        }
     }
 
     public LiveData<List<Category>> getCategoryList(){
