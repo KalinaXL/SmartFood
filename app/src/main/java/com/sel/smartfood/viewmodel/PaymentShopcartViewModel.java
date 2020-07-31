@@ -50,6 +50,9 @@ public class PaymentShopcartViewModel extends AndroidViewModel implements IBalan
                 .subscribe(account -> paymentAccount.postValue(account), e -> paymentAccount.postValue(null));
         compositeDisposable.add(d);
     }
+    public boolean isEnoughBalance(long amount){
+        return paymentAccount != null ? paymentAccount.getValue().getBalance() >= amount : false;
+    }
     public void updateBalance(long amountOfMoney){
         String key = preferenceManager.getEmail().split("@")[0];
         amountOfMoney = paymentAccount.getValue().getBalance() - amountOfMoney;

@@ -207,7 +207,7 @@ public class TransactionViewModel extends AndroidViewModel implements IBalanceCa
     }
     private String[] getPaymentServiceNames(){
         return new String[]{
-          "Momo",
+          "Ví Momo",
           "ViettelPay",
           "SamsungPay",
           "ApplePay"

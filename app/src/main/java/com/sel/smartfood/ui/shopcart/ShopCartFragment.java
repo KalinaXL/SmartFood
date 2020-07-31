@@ -106,6 +106,18 @@ public class ShopCartFragment extends Fragment {
         });
         bottomSheetView.findViewById(R.id.ll_payment_account_type).setOnClickListener(v->{
 
+            if (!viewModel.isEnoughBalance(amountOfPrice)){
+                AlertDialog dialog = new AlertDialog.Builder(requireContext())
+                        .setCancelable(false)
+                        .setTitle("Lỗi")
+                        .setMessage("Số dư không đủ")
+                        .setNegativeButton("OK", (dialog1, which) -> {
+                        }).create();
+                dialog.show();
+                bottomSheetDialog.dismiss();
+                return;
+            }
+
             viewModel.updateBalance(amountOfPrice);
 
             viewModel.getIsUpdatedSuccessful().observe(getViewLifecycleOwner(), isSuccessful -> {
@@ -146,6 +158,7 @@ public class ShopCartFragment extends Fragment {
 //                                    NavHostFragment.findNavController(this).navigate(R.id.action_inputMoneyFragment_to_nav_transaction);
                                 }).create();
                         dialog.show();
+                        bottomSheetDialog.dismiss();
                     }
                 }
             });
