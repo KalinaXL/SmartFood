@@ -32,6 +32,7 @@ public class AdminViewModel extends AndroidViewModel {
     private CompositeDisposable compositeDisposable;
     private MutableLiveData<Boolean> isUpdateButtonEnabled = new MutableLiveData<>();
     private MutableLiveData<Emitter<Boolean> >isUpdateSucess = new MutableLiveData<>();
+    private MutableLiveData<Integer[]> numTypeTrans = new MutableLiveData<>();
     public AdminViewModel(@NonNull Application application) {
         super(application);
         preferenceManager = new PreferenceManager(application);
@@ -52,9 +53,22 @@ public class AdminViewModel extends AndroidViewModel {
     public void getAllTransHistories(){
         Disposable d = firebaseService.getAllTransHistories()
                     .subscribeOn(Schedulers.io())
-                    .subscribe(user -> tranHistories.postValue(user), e -> tranHistories.postValue(null));
+                    .subscribe(histories -> {
+                            int withdraw = 0, deposit = 0;
+                            for (TransHistory history : histories){
+                                if (history.isWithdraw()){
+                                    ++withdraw;
+                                }
+                                else{
+                                    ++deposit;
+                                }
+                            }
+                            numTypeTrans.postValue(new Integer[]{withdraw, deposit});
+                            tranHistories.postValue(histories);
+                        }, e -> tranHistories.postValue(null));
         compositeDisposable.add(d);
     }
+
     public void logout(){
         preferenceManager.deleteLogInState();
         preferenceManager.clearEmail();
@@ -85,6 +99,10 @@ public class AdminViewModel extends AndroidViewModel {
 
     public LiveData<Emitter<Boolean>> isUpdateSucess() {
         return isUpdateSucess;
+    }
+
+    public MutableLiveData<Integer[]> getNumTypeTrans() {
+        return numTypeTrans;
     }
 
     @Override
