@@ -5,7 +5,9 @@
     * Java JDK 11, Java 8
     * Git flow, MVVM
 2. Để sử dụng app:
-    * Dùng tài khoản có sẵn: username = 'admin@gmail.com', password = '123456789'
+    * Tài khoản
+        * Người dùng: username = 'guess@gmail.com', password = '123456'
+        * Admin: username = 'admin@gmail.com', password = '123456789'
     * Hoặc, đăng ký mới tài khoẳn
     * Cần kết nối Internet, nếu không sẽ báo lỗi và không sử dụng được
 3.  Chức năng:
@@ -33,9 +35,9 @@
         * [ ] Lịch sử đặt hàng
         * [x] Lịch sử giao dịch
         * [x] Đăng xuất
-    * [] Administrators
+    * [ ] Administrators
         * [x] Hiển thị món ăn
-        * [ ] Chỉnh sửa món ăn
+        * [x] Chỉnh sửa món ăn
         * [ ] Thống kê
         * [x] Hiển thị thông tin administrator
         * [x] Đăng xuất
