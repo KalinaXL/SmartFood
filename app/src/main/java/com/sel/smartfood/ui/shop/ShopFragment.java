@@ -71,7 +71,7 @@ public class ShopFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findWidgets(view);
 
-        shopViewModel = new ViewModelProvider(getActivity()).get(ShopViewModel.class);
+        shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
         if (shopViewModel.getHasProductsLoaded().getValue() == null || !shopViewModel.getHasProductsLoaded().getValue()){
             dialog.show(getChildFragmentManager(), "LOADING");
             isDialogShowed = true;

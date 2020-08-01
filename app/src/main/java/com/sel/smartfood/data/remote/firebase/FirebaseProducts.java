@@ -45,10 +45,10 @@ public class FirebaseProducts {
     }
     // lay cac loai mon an
     public void getCategories(){
-        List<Category> categories = new ArrayList<>();
         categoriesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Category> categories = new ArrayList<>();
                 for (DataSnapshot node: snapshot.getChildren()){
                     categories.add(node.getValue(Category.class));
                 }
@@ -56,16 +56,16 @@ public class FirebaseProducts {
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                categoryCallbackListener.OnCategoryLoadSuccess(categories);
+                categoryCallbackListener.OnCategoryLoadSuccess(new ArrayList<>());
             }
         });
     }
     // lay het cac mon an
     public void getProducts() {
-        List<Product> products = new ArrayList<>();
         productsRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                List<Product> products = new ArrayList<>();
                 for (DataSnapshot node : snapshot.getChildren()) {
                     products.add(node.getValue(Product.class));
                 }
@@ -74,38 +74,29 @@ public class FirebaseProducts {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                productCallbackListener.OnProductLoadSuccess(products);
+                productCallbackListener.OnProductLoadSuccess(new ArrayList<>());
             }
         });
     }
     public Single<Boolean> updateProduct(Product product){
         return Single.create(emitter -> {
                 DatabaseReference reference = productsRef.child(String.valueOf(product.getId()));
-                reference.child("name").setValue(product.getName()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (emitter.isDisposed() || !task.isSuccessful()){
-                            emitter.onError(task.getException());
-                        }
+                reference.child("name").setValue(product.getName()).addOnCompleteListener(task -> {
+                    if (emitter.isDisposed() || !task.isSuccessful()){
+                        emitter.onError(task.getException());
                     }
                 });
-                reference.child("price").setValue(product.getPrice()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (emitter.isDisposed() || !task.isSuccessful()){
-                            emitter.onError(task.getException());
-                        }
+                reference.child("price").setValue(product.getPrice()).addOnCompleteListener(task -> {
+                    if (emitter.isDisposed() || !task.isSuccessful()){
+                        emitter.onError(task.getException());
                     }
                 });
-                reference.child("description").setValue(product.getDescription()).addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (emitter.isDisposed() || !task.isSuccessful()){
-                            emitter.onError(task.getException());
-                        }
-                        else{
-                            emitter.onSuccess(true);
-                        }
+                reference.child("description").setValue(product.getDescription()).addOnCompleteListener(task -> {
+                    if (emitter.isDisposed() || !task.isSuccessful()){
+                        emitter.onError(task.getException());
+                    }
+                    else{
+                        emitter.onSuccess(true);
                     }
                 });
 

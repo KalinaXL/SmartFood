@@ -39,7 +39,6 @@ public class FragmentUpdateProduct extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-//        ((AppCompatActivity)getActivity()).getSupportActionBar().hide();
         return inflater.inflate(R.layout.fragment_update_product, container, false);
     }
 
@@ -48,7 +47,7 @@ public class FragmentUpdateProduct extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findWidgets(view);
         AdminViewModel adminViewModel = new ViewModelProvider(this).get(AdminViewModel.class);
-        ShopViewModel shopViewModel = new ViewModelProvider(getActivity()).get(ShopViewModel.class);
+        ShopViewModel shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
         Bundle bundle = getArguments();
         if (bundle != null){
             Picasso.get().load(bundle.getString("product_image")).into(productImageIv);
@@ -96,30 +95,20 @@ public class FragmentUpdateProduct extends Fragment {
         });
         adminViewModel.isUpdateSucess().observe(getViewLifecycleOwner(), success -> {
             if (success != null){
+                boolean flag = success.isHandled();
                 Boolean value = success.getData();
                 if (value != null && value) {
                     shopViewModel.changeProduct(savedProduct);
                     Toast.makeText(requireActivity(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+                }
+                else if (flag){
+                    Toast.makeText(requireActivity(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
                 }
             }
             updateProductBtn.setEnabled(false);
         });
 
 
-    }
-
-    @Override
-    public void setTargetFragment(@Nullable Fragment fragment, int requestCode) {
-        Bundle bundle = null;
-        if (savedProduct != null){
-            bundle = new Bundle();
-            bundle.putInt("id", savedProduct.getId());
-            bundle.putString("name", savedProduct.getName());
-            bundle.putString("description", savedProduct.getDescription());
-            bundle.putInt("price", savedProduct.getPrice());
-        }
-        fragment.setArguments(bundle);
-        super.setTargetFragment(fragment, requestCode);
     }
 
     private void findWidgets(View view){
