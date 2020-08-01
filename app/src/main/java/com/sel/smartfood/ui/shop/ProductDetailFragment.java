@@ -156,12 +156,12 @@ public class ProductDetailFragment extends Fragment {
     }
 
     private void Maps(View view) {
-        toolbarProductDetails = (Toolbar)view.findViewById(R.id.toolbar_product_details);
-        ivProductDetails = (ImageView) view.findViewById(R.id.iv_product_details);
-        tvName = (TextView) view.findViewById(R.id.tv_name_product_details);
-        tvPrice = (TextView) view.findViewById(R.id.tv_price_product_details);
-        tvDescriptions = (TextView) view.findViewById(R.id.tv_description_product_details);
-        spinner = (Spinner) view.findViewById(R.id.spinner);
-        btnOrder = (Button) view.findViewById(R.id.btn_order);
+        toolbarProductDetails = view.findViewById(R.id.toolbar_product_details);
+        ivProductDetails = view.findViewById(R.id.iv_product_details);
+        tvName = view.findViewById(R.id.tv_name_product_details);
+        tvPrice = view.findViewById(R.id.tv_price_product_details);
+        tvDescriptions = view.findViewById(R.id.tv_description_product_details);
+        spinner = view.findViewById(R.id.spinner);
+        btnOrder = view.findViewById(R.id.btn_order);
     }
 }

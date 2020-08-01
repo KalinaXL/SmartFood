@@ -1,6 +1,7 @@
 package com.sel.smartfood.ui.shop;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +29,7 @@ import com.sel.smartfood.R;
 import com.sel.smartfood.data.model.Category;
 import com.sel.smartfood.data.model.Product;
 import com.sel.smartfood.data.model.ShopCartModel;
+import com.sel.smartfood.ui.admin.FragmentUpdateProduct;
 import com.sel.smartfood.viewmodel.ShopViewModel;
 
 import java.util.ArrayList;
@@ -68,7 +71,7 @@ public class ShopFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         findWidgets(view);
 
-        shopViewModel = new ViewModelProvider(getActivity()).get(ShopViewModel.class);
+        shopViewModel = new ViewModelProvider(requireActivity()).get(ShopViewModel.class);
         if (shopViewModel.getHasProductsLoaded().getValue() == null || !shopViewModel.getHasProductsLoaded().getValue()){
             dialog.show(getChildFragmentManager(), "LOADING");
             isDialogShowed = true;
@@ -172,14 +175,30 @@ public class ShopFragment extends Fragment {
 
                         List<Product> productList = productAdapter.getProductList();
                         final NavController navController = Navigation.findNavController(view);
-                        ShopFragmentDirections.ActionNavShopToProductDetailFragment action = ShopFragmentDirections.actionNavShopToProductDetailFragment();
-                        // transfer data to ProductDetailFragment
-                        action.setProductId(productList.get(position).getId());
-                        action.setProductName(productList.get(position).getName());
-                        action.setProductPrice(productList.get(position).getPrice());
-                        action.setProductImage(productList.get(position).getUrl());
-                        action.setProductDescription(productList.get(position).getDescription());
-                        navController.navigate(action);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("product_name", productList.get(position).getName());
+                        bundle.putInt("product_price", productList.get(position).getPrice());
+                        bundle.putString("product_description", productList.get(position).getDescription());
+                        bundle.putFloat("product_pre_time", 0);
+                        bundle.putInt("product_ratingScore", 0);
+                        bundle.putString("product_image", productList.get(position).getUrl());
+                        bundle.putInt("product_id", productList.get(position).getId());
+
+                        if (shopViewModel.isAdminState()){
+                            navController.navigate(R.id.action_admin_nav_shop_to_fragmentUpdateProduct, bundle);
+                            return;
+                        }
+
+//                        ShopFragmentDirections.ActionNavShopToProductDetailFragment action = ShopFragmentDirections.actionNavShopToProductDetailFragment();
+//                        // transfer data to ProductDetailFragment
+//                        action.setProductId(productList.get(position).getId());
+//                        action.setProductName(productList.get(position).getName());
+//                        action.setProductPrice(productList.get(position).getPrice());
+//                        action.setProductImage(productList.get(position).getUrl());
+//                        action.setProductDescription(productList.get(position).getDescription());
+//                        navController.navigate(action);
+
+                        navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
                     }
 
                     @Override
@@ -224,4 +243,6 @@ public class ShopFragment extends Fragment {
             productsRv.setVisibility(View.VISIBLE);
         }
     }
+
+
 }

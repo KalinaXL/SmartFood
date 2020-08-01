@@ -44,7 +44,7 @@ public class AdminActivity extends AppCompatActivity {
         viewModel.getProducts();
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.nav_view);
+        NavigationView navigationView = findViewById(R.id.nav_admin_view);
         adminNameTv = navigationView.getHeaderView(0).findViewById(R.id.tv_admin_name);
         adminEmailTv = navigationView.getHeaderView(0).findViewById(R.id.tv_admin_email);
         // Passing each menu ID as a set of Ids because each
@@ -55,7 +55,7 @@ public class AdminActivity extends AppCompatActivity {
                 R.id.admin_log_out)
                 .setDrawerLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_admin_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
@@ -78,15 +78,8 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.admin, menu);
-        return true;
-    }
-
-    @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        NavController navController = Navigation.findNavController(this, R.id.nav_admin_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
