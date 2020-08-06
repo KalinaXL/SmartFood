@@ -163,7 +163,6 @@ public class ShopFragment extends Fragment {
 
                         List<Product> productList = productAdapter.getProductList();
                         final NavController navController = Navigation.findNavController(view);
-<<<<<<< HEAD
                         Bundle bundle = new Bundle();
                         bundle.putString("product_name", productList.get(position).getName());
                         bundle.putInt("product_price", productList.get(position).getPrice());
@@ -178,18 +177,6 @@ public class ShopFragment extends Fragment {
                             return;
                         }
 
-//                        ShopFragmentDirections.ActionNavShopToProductDetailFragment action = ShopFragmentDirections.actionNavShopToProductDetailFragment();
-//                        // transfer data to ProductDetailFragment
-//                        action.setProductId(productList.get(position).getId());
-//                        action.setProductName(productList.get(position).getName());
-//                        action.setProductPrice(productList.get(position).getPrice());
-//                        action.setProductImage(productList.get(position).getUrl());
-//                        action.setProductDescription(productList.get(position).getDescription());
-//                        navController.navigate(action);
-
-                        navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
-=======
-
                         ShopFragmentDirections.ActionNavShopToProductDetailFragment action = ShopFragmentDirections.actionNavShopToProductDetailFragment();
                         // transfer data to ProductDetailFragment
                         action.setProductId(productList.get(position).getId());
@@ -198,7 +185,9 @@ public class ShopFragment extends Fragment {
                         action.setProductImage(productList.get(position).getUrl());
                         action.setProductDescription(productList.get(position).getDescription());
                         navController.navigate(action);
->>>>>>> feature/OrderPayment
+
+                        navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
+
                     }
 
                     @Override
