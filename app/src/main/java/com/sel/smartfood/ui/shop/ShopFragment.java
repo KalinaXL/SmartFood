@@ -185,8 +185,8 @@ public class ShopFragment extends Fragment {
                         action.setProductImage(productList.get(position).getUrl());
                         action.setProductDescription(productList.get(position).getDescription());
                         navController.navigate(action);
-
-                        navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
+//
+//                        navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
 
                     }
 
