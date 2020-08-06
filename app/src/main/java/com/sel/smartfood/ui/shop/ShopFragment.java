@@ -154,18 +154,6 @@ public class ShopFragment extends Fragment {
         productsRv.setNestedScrollingEnabled(true);
         productAdapter = new ProductAdapter();
         productsRv.setAdapter(productAdapter);
-//        productsRv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                LinearLayoutManager linearLayoutManager = (LinearLayoutManager)productsRv.getLayoutManager();
-//                if (!isLoading && hasProducts && linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == productAdapter.getItemCount() - 1){
-//                    productAdapter.setLoadingState();
-//                    isLoading = true;
-//                    shopViewModel.fetchMoreProducts(currentPagePosition);
-//                }
-//            }
-//        });
 
         productsRv.addOnItemTouchListener(new RecyclerItemClickListener(
                 getContext(), productsRv, new RecyclerItemClickListener.OnItemClickListener(){
@@ -175,6 +163,7 @@ public class ShopFragment extends Fragment {
 
                         List<Product> productList = productAdapter.getProductList();
                         final NavController navController = Navigation.findNavController(view);
+<<<<<<< HEAD
                         Bundle bundle = new Bundle();
                         bundle.putString("product_name", productList.get(position).getName());
                         bundle.putInt("product_price", productList.get(position).getPrice());
@@ -199,6 +188,17 @@ public class ShopFragment extends Fragment {
 //                        navController.navigate(action);
 
                         navController.navigate(R.id.action_nav_shop_to_productDetailFragment, bundle);
+=======
+
+                        ShopFragmentDirections.ActionNavShopToProductDetailFragment action = ShopFragmentDirections.actionNavShopToProductDetailFragment();
+                        // transfer data to ProductDetailFragment
+                        action.setProductId(productList.get(position).getId());
+                        action.setProductName(productList.get(position).getName());
+                        action.setProductPrice(productList.get(position).getPrice());
+                        action.setProductImage(productList.get(position).getUrl());
+                        action.setProductDescription(productList.get(position).getDescription());
+                        navController.navigate(action);
+>>>>>>> feature/OrderPayment
                     }
 
                     @Override
